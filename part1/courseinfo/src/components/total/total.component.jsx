@@ -1,8 +1,11 @@
 import React from 'react';
-// import './header.styles.scss';
+import './total.styles.scss';
 
 const Total = (props) => (
-  <p>Number of exercises {props.ex1 + props.ex2 + props.ex3}</p>
+  <p className='total'>
+    Number of exercises:
+      <span> {props.count[0].exercises + props.count[1].exercises + props.count[2].exercises}</span>
+  </p>
 )
 
 export default Total;
