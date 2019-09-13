@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react'; // Adding useState for the state hook
 import ReactDOM from 'react-dom';
 import './index.css';
+
+import Hello from './components/hello.component'
 
 // const App = () => {
 //   const now = new Date()
@@ -17,14 +19,6 @@ import './index.css';
 //   )
 // }
 
-// Hello component
-const Hello = (props) => {
-  return (
-    <div>
-      <p>Hello {props.name}, you are {props.age} years old</p>
-    </div>
-  )
-}
 
 // Footer component test
 const Footer = (props) => {
@@ -37,17 +31,25 @@ const Footer = (props) => {
   )
 }
 
-const App = () => {
+
+const App = (props) => {
+  const [counter, setCounter] = useState(0);
+
+  setTimeout(() => {
+    setCounter(counter + 1)
+  }, 1000);
+  console.log('rendering...', counter)
   const name = 'Beto'
   const age = 33
   const courseLink1 = "https://fullstackopen.com/en/part1/introduction_to_react#component"
   return (
-    <>
+    <div>
       <h1>Greetings</h1>
       <Hello name="Maya" age={1 + 1} />
       <Hello name={name} age={age} />
+      <p>Counter is: {counter}</p>
       <Footer link={courseLink1} />
-    </>
+    </div>
   )
 }
 
