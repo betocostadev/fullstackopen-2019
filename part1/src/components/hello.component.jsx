@@ -10,5 +10,4 @@ const Hello = ({name, age}) => {
   )
 }
 
-
 export default Hello;
