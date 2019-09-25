@@ -1,5 +1,38 @@
 .App-header {
-  text-align: center;
+  margin: 1rem 1rem 1.6rem 2rem;
+  color: white;
+}
+
+.btn-default {
+  margin: 0.2rem;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:1rem;
+	padding:0.2rem 0.5rem;
+	text-decoration:none;
+}
+.confirm {
+  background-color:#3fd01b;
+	border:1px solid #309411;
+}
+
+.default {
+  background-color:#271bd0;
+	border:1px solid #112994;
+}
+
+.danger {
+  background-color:#d0451b;
+	border:1px solid #942911;
+}
+
+.buttons {
+  margin: 1rem;
+}
+
+.table {
+  margin: 1rem;
   color: white;
 }
 
