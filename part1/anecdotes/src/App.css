@@ -1,0 +1,39 @@
+.App {
+  margin: 0;
+  background-color: #282c34;
+  min-height: 100vh;
+  color: white;
+}
+
+.App-header {
+  color: white;
+  margin: 0;
+}
+
+.App-header h1 {
+  margin: 0;
+  padding: 1rem;
+}
+
+p {
+  margin: 0.5rem;
+}
+
+.btn-random {
+  margin: 1rem 0.5rem;
+	display: inline-block;
+	cursor: pointer;
+	color: #ffffff;
+	font-size: 1rem;
+	padding: 0.2rem 0.5rem;
+	text-decoration: none;
+}
+
+.confirm {
+  background-color:#3fd01b;
+	border:1px solid #309411;
+}
+.default {
+  background-color: #271bd0;
+	border: 1px solid #112994;
+}
