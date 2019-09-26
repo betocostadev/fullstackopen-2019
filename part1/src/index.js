@@ -34,6 +34,8 @@ const History = (props) => {
   )
 }
 
+const DisplayTitle = props => <h1>{props.value}</h1>
+
 
 const App = (props) => {
   // setTimeout(() => {
@@ -101,7 +103,7 @@ const App = (props) => {
   const courseLink1 = "https://fullstackopen.com/en/part1/introduction_to_react#component"
   return (
     <div>
-      <h1>Greetings</h1>
+      <DisplayTitle value='Full Stack Open 2019 | Part 1' />
       <Hello name="Maya" age={1 + 1} />
       <Hello name={name} age={age} />
       <Display counter={counter} />
@@ -122,12 +124,15 @@ const App = (props) => {
         <button onClick={handleSomeValue(100)}>Set to 100</button>
         <button onClick={handleSomeValue(1000)}>Set to 1000</button>
         <button onClick={handleSomeValue(someValue + 1)}>Add 1</button>
+        <button onClick={handleSomeValue(0)}>Reset</button>
         <p>{someValue}</p>
       </div>
-      <button onClick={hello()}>Log Hello</button>
-      <button onClick={hello2('React')}>Hello, React</button>
-      <button onClick={hello2('FS Open')}>Hello, FS Open</button>
-      <button onClick={hello3('Course')}>Hello, Course</button>
+      <div>
+        <button onClick={hello()}>Log Hello</button>
+        <button onClick={hello2('React')}>Hello, React</button>
+        <button onClick={hello2('FS Open')}>Hello, FS Open</button>
+        <button onClick={hello3('Course')}>Hello, Course</button>
+      </div>
       <Footer link={courseLink1} />
     </div>
   )
