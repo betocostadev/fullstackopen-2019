@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const App = (props) => {
+const App = () => {
   const [selected, setSelected] = useState(0);
   const [vote, setVote] = useState(Array(6).fill(0));
   const anecdotes = [
@@ -12,21 +12,26 @@ const App = (props) => {
     'Premature optimization is the root of all evil.',
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
   ]
-  console.log(vote);
 
   const voteCopy = [...vote]
+
   const addVote = () => {
-    console.log(voteCopy);
     voteCopy[selected] += 1
     setVote(voteCopy);
   }
 
+  // const showMostVoted = () => {
+  //   console.log(Math.max(...voteCopy));
+  //   console.log('index of max is: ', voteCopy.indexOf(Math.max(...voteCopy)));
+  //   console.log(anecdotes[voteCopy.indexOf(Math.max(...voteCopy))]);
+  // }
+
   const random = () => {
-    let randomAnecdote = Math.floor(Math.random() * Math.floor(6));
+    let randomAnecdote = Math.floor(Math.random() * anecdotes.length);
     if (randomAnecdote === selected) {
-      randomAnecdote = Math.floor(Math.random() * Math.floor(6));
+      randomAnecdote = Math.floor(Math.random() * anecdotes.length);
     }
-    console.log(vote[selected])
+    // console.log(vote[selected])
     return randomAnecdote;
   }
   return (
@@ -36,17 +41,29 @@ const App = (props) => {
           Anecdotes
         </h1>
       </header>
-      <div>
-        <p>
+      <div className='anecdotes__container'>
+        <h2>Anecdote of the day</h2>
+        <p className='anecdote'>
           {anecdotes[selected]}
         </p>
+        <p>Has {voteCopy[selected]} votes</p>
         <button className='btn-random confirm' onClick={addVote}>vote</button>
         <button className='btn-random default' onClick={() => setSelected(random)}>next anecdote</button>
       </div>
       <div>
         <h2>Anecdote with most votes</h2>
-        <p></p>
-        <p>Has {voteCopy[selected]} votes</p>
+        {
+          Math.max(...voteCopy) === 0
+          ?
+          <div>
+            <p>No Votes yet.</p>
+          </div>
+          :
+          <div>
+            <p>{(anecdotes[voteCopy.indexOf(Math.max(...voteCopy))])}</p>
+            <p>Has {Math.max(...voteCopy)} votes</p>
+          </div>
+        }
       </div>
     </div>
   );

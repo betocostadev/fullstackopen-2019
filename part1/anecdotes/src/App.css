@@ -10,9 +10,21 @@
   margin: 0;
 }
 
-.App-header h1 {
+.anecdotes__container {
+  min-height: 30vh;
+}
+
+.anecdote {
+  font-size: 1.1rem;
+}
+
+h1 {
   margin: 0;
-  padding: 1rem;
+  padding: 0.5rem;
+}
+
+h2 {
+  padding: 0.5rem;
 }
 
 p {
