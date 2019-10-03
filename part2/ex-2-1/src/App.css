@@ -1,0 +1,19 @@
+.App {
+  padding-top: 1rem;
+  background-color: #282c34;
+  min-height: 100vh;
+  color: white;
+}
+
+/* MEDIA CATCH ALL */
+img, embed, object, video {
+  max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0.5rem 1rem 0.5rem;
+}
+
+p   {
+  margin: 0 0.5rem 0.5rem 0.5rem;
+}
