@@ -4,30 +4,27 @@ import './index.css';
 
 import App from './App'
 
-const notes = [
-  {
-    id: 1,
-    content: 'HTML is easy',
-    date: '2019-05-30T17:30:31.098Z',
-    important: true
-  },
-  {
-    id: 2,
-    content: 'Browser can execute only Javascript',
-    date: '2019-05-30T18:39:34.091Z',
-    important: false
-  },
-  {
-    id: 3,
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    date: '2019-05-30T19:20:14.298Z',
-    important: true
-  }
-]
+// import axios from 'axios'
 
-const course = {
-  name: 'Full Stack Open', year: 2019
-}
+// Working axios promise (fulfilled)
+// const promise = axios.get('http://localhost:3001/notes')
+// console.log(promise)
+// promise.then(response => {
+//   console.log(response.data)
+// })
+
+// Commom pattern:
+// axios
+//   .get('http://localhost:3001/notes')
+//   .then(response => {
+//     const notes = response.data
+//     console.log(notes)
+//   })
+
+// Gettin a promise rejected - There is no /foobar on the json db
+// const promise2 = axios.get('http://localhost:3001/foobar')
+// console.log(promise2)
+
 
 /*
   // ANTI-PATTERN: This way works, it uses the index of the array elements as keys, but
@@ -43,6 +40,6 @@ const course = {
   // console.log(result)
 
 ReactDOM.render(
-  <App notes={notes} course={course}/>,
+  <App />,
   document.getElementById('root')
 );

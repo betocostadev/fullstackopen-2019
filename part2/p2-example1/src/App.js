@@ -1,13 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
+import axios from 'axios'
+
+// Components
 import Header from './components/header/header.component'
 import Note from './components/note/note.component'
 
 
-const App = (props) => {
-  const [notes, setNotes] = useState(props.notes)
+const App = () => {
+  const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [importantNote, setImportantNote] = useState('checked');
   const [showAll, setShowAll] = useState(true)
+
+  // useEffect to get data from the json server
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/notes')
+      .then(response => {
+        console.log('promise fulfilled')
+        setNotes(response.data)
+      })
+  }, [])
+  console.log('render', notes.length, 'notes')
+
+  const course = {
+    name: 'Full Stack Open', year: 2019
+  }
 
   const notesToShow = showAll
   ? notes
@@ -46,7 +66,7 @@ const App = (props) => {
 
   return (
     <div>
-      <Header course={props.course} />
+      <Header course={course} />
       <h1>Notes</h1>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
@@ -59,9 +79,13 @@ const App = (props) => {
       <form onSubmit={addNote}>
         <input
           value={newNote}
-          onChange={handleNoteChange}/>
+          onChange={handleNoteChange}
+          placeholder='Add note...' />
         <button type='submit'>save</button>
-        <input type='checkbox' checked={importantNote} onChange={handleImportance} />Important?
+        <label>
+          Important?
+          <input type='checkbox' checked={importantNote} onChange={handleImportance} />
+        </label>
       </form>
     </div>
   )
