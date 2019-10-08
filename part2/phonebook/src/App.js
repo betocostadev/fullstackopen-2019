@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
 
+// Components
+import Search from './components/search/search.component'
+import AddNewPerson from './components/add-new-person/add-new-person.component'
+import Numbers from './components/numbers/numbers.component'
+
 function App() {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -60,34 +65,16 @@ function App() {
 
   return (
     <div className="App">
-    <h2>Phonebook</h2>
-    <h3>Seach by name</h3>
-    <form>
-      <label>
-        Name:
-        <input type="text" value={searchName} onChange={handleSearchName} />
-      </label>
-    </form>
-    <h3>Add new person</h3>
-    <form>
-      <label>
-        Name:
-        <input type="text" value={newName} onChange={handleNewName} />
-      </label>
-      <label>
-        Telephone:
-        <input type="tel" value={newNumber} onChange={handleNewNumber} />
-      </label>
-      <div>
-        <button type="submit" onClick={addPerson}>add</button>
-      </div>
-    </form>
-    <h2>Numbers</h2>
-    <ul className='person-list'>
-      {
-        personsToShow.map(person => <li key={person.id}>{person.name} | {person.number}</li>)
-      }
-    </ul>
+      <h2>Phonebook</h2>
+      <Search searchName={searchName} handleSearchName={handleSearchName}/>
+      <AddNewPerson
+        newName={newName}
+          newNumber={newNumber}
+            handleNewName={handleNewName}
+              handleNewNumber={handleNewNumber}
+                addPerson={addPerson}
+      />
+      <Numbers personsToShow={personsToShow} />
     </div>
   );
 }

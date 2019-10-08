@@ -1,0 +1,14 @@
+.person-list {
+  border-left: 1px solid lightcoral;
+  margin: 1rem 2rem 1rem 1rem;
+  padding: 0.5rem 0 0.5rem 0;
+  min-height: 20vh;
+}
+
+.person-list li {
+  list-style-type: none;
+  margin: 0.25rem;
+  padding: 0.25rem;
+  max-width: 50vw;
+  border-bottom: 1px solid gray;
+}
