@@ -5,14 +5,21 @@ import './App.css'
 import axios from 'axios'
 
 import CountryDisplay from './components/country-display/country-display.component'
+import CountryMatches from './components/country-matches/country-matches.component'
 
 function App() {
   const [ countries, setCountries ] = useState([])
   const [ countrySearch, setCountrySearch ] = useState('')
 
   const handleCountrySearch = event => {
+    event.preventDefault()
     console.log(event.target.value)
     setCountrySearch(event.target.value.toLowerCase())
+  }
+
+  const clearSearch = event => {
+    event.preventDefault()
+    setCountrySearch('')
   }
 
   const searchResults = countries.filter(country => country.name.toLowerCase().includes(countrySearch))
@@ -55,19 +62,18 @@ function App() {
         <label>
           Find countries:
           <input type="text" value={countrySearch} onChange={handleCountrySearch} />
-        </label>
+          </label>
+          <button onClick={clearSearch}>X</button>
       </form>
-      {
-        (searchResults.length > 10 && countrySearch.length === 0)
-        ? <p></p>
-        : (searchResults.length > 10)
-        ? <p>Too many results, be more specific!</p>
-        : searchResults.map(country =>
-          <p key={country.name}>{country.name}</p>)
-      }
+
+      <CountryMatches
+        matches={searchResults}
+        countrySearch={countrySearch}
+        setCountrySearch={setCountrySearch}
+      />
       {
         searchResults.length === 1
-        ? <CountryDisplay country={searchResults[0]}/>
+        ? <CountryDisplay country={searchResults[0]} />
         : <p>NO!</p>
       }
 
