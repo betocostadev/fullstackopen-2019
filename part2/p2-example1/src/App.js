@@ -10,11 +10,12 @@ import Note from './components/note/note.component'
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
-  const [importantNote, setImportantNote] = useState('checked');
+  const [importantNote, setImportantNote] = useState(false);
   const [showAll, setShowAll] = useState(true)
 
   // useEffect to get data from the json server
-  useEffect(() => {
+  // Default way to write useEffect
+  /* useEffect(() => {
     console.log('effect')
     axios
       .get('http://localhost:3001/notes')
@@ -23,7 +24,19 @@ const App = () => {
         setNotes(response.data)
       })
   }, [])
-  console.log('render', notes.length, 'notes')
+  console.log('render', notes.length, 'notes') */
+
+  // Another way to write useEffect, as a separate hook:
+  const hook = () => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/notes')
+      .then(response => {
+        console.log('promise fulfilled')
+        setNotes(response.data)
+      })
+  }
+  useEffect(hook, [])
 
   const course = {
     name: 'Full Stack Open', year: 2019
@@ -44,10 +57,10 @@ const App = () => {
     // console.log('button clicked', event.target)
     //   important: Math.random() > 0.5,
     const noteObject = {
+      id: notes.length + 1,
       content: newNote,
       date: new Date().toISOString(),
       important: importantNote,
-      id: notes.length + 1
     }
     setNotes(notes.concat(noteObject))
     setNewNote('')
@@ -60,7 +73,6 @@ const App = () => {
   }
 
   const handleImportance = (event) => {
-    console.log(event.target.checked)
     setImportantNote(event.target.checked)
   }
 
