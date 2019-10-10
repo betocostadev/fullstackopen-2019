@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import CountryDisplay from './components/country-display/country-display.component'
 import CountryMatches from './components/country-matches/country-matches.component'
+import CapitalWeather from './components/capital-weather/capital-weather.component'
 
 function App() {
   const [ countries, setCountries ] = useState([])
@@ -13,7 +14,7 @@ function App() {
 
   const handleCountrySearch = event => {
     event.preventDefault()
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setCountrySearch(event.target.value.toLowerCase())
   }
 
@@ -24,8 +25,8 @@ function App() {
 
   const searchResults = countries.filter(country => country.name.toLowerCase().includes(countrySearch))
 
-  useEffect(() => {
-    console.log('Effect')
+  const fetchCountries = () => {
+    // console.log('effect')
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => {
@@ -33,7 +34,8 @@ function App() {
         setCountries(response.data)
         console.log(response.data)
       })
-  },[]);
+  }
+  useEffect(fetchCountries, [])
 
   /* let ResultsDisplay;
   console.log(searchResults.length)
@@ -73,8 +75,11 @@ function App() {
       />
       {
         searchResults.length === 1
-        ? <CountryDisplay country={searchResults[0]} />
-        : <p>NO!</p>
+        ? <div>
+            <CountryDisplay country={searchResults[0]} />
+            <CapitalWeather capital={searchResults[0].capital} />
+          </div>
+        : <p></p>
       }
 
     </div>

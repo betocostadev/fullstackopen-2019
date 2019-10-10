@@ -1,0 +1,21 @@
+.container__countries {
+  margin: 0.5rem;
+  padding: 0;
+}
+
+.matching-countries {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.btn-country-select {
+  border-radius: 10px;
+  background-color: white;
+  padding: 0.25rem;
+  margin: 0.25rem;
+}
+
+.btn-country-select:hover {
+  cursor: pointer;
+}
