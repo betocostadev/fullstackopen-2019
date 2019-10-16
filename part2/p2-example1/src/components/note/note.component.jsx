@@ -1,8 +1,15 @@
 import React from 'react'
 
-const Note = ({note}) => {
+import Button from './note.styles'
+
+const Note = ({note, toggleImportance}) => {
+  const label = note.important
+    ? 'not important' : 'important'
   return (
-    <li>{note.content}</li>
+    <li>
+      {note.content}
+      <Button onClick={toggleImportance}>{label}</Button>
+    </li>
   )
 }
 

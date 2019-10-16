@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
-import axios from 'axios'
+// import axios from 'axios'
+
+import noteService from './services/notes'
 
 // Components
 import Header from './components/header/header.component'
@@ -12,6 +14,10 @@ const App = () => {
   const [newNote, setNewNote] = useState('')
   const [importantNote, setImportantNote] = useState(false);
   const [showAll, setShowAll] = useState(true)
+
+  const course = {
+    name: 'Full Stack Open', year: 2019
+  }
 
   // useEffect to get data from the json server
   // Default way to write useEffect
@@ -29,18 +35,14 @@ const App = () => {
   // Another way to write useEffect, as a separate hook:
   const hook = () => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/notes')
-      .then(response => {
-        console.log('promise fulfilled')
-        setNotes(response.data)
+    noteService
+      .getAll()
+      .then(initialNotes => {
+        console.log('Promise fulfilled, got notes')
+        setNotes(initialNotes)
       })
   }
   useEffect(hook, [])
-
-  const course = {
-    name: 'Full Stack Open', year: 2019
-  }
 
   const notesToShow = showAll
   ? notes
@@ -49,6 +51,7 @@ const App = () => {
     <Note
       key={note.id}
       note={note}
+      toggleImportance={() => toggleImportanceOf(note.id)}
     />
   )
 
@@ -62,9 +65,27 @@ const App = () => {
       date: new Date().toISOString(),
       important: importantNote,
     }
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
-    setImportantNote(false)
+
+    noteService
+      .create(noteObject)
+      .then(newNotes => {
+        setNotes(notes.concat(newNotes))
+        setNewNote('')
+        setImportantNote(false)
+      })
+  }
+
+  const toggleImportanceOf = id => {
+    // const url = `http://localhost:3001/notes/${id}`
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+      .update(id, changedNote)
+      .then(changedNotes => {
+        setNotes(notes.map(note => note.id !== id ? note : changedNotes))
+        console.log(`importance of note: ${id}, changed`)
+      })
   }
 
   const handleNoteChange = (event) => {
@@ -75,6 +96,8 @@ const App = () => {
   const handleImportance = (event) => {
     setImportantNote(event.target.checked)
   }
+
+
 
   return (
     <div>
