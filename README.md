@@ -17,6 +17,12 @@ Sequence Diagrams 0.4 - 0.6
   - P2example-2
   - ex-2-1: 2.1: course contents step6
 - Part 2b: Forms
-  - P2-example2
+  - P2-example1
+  - Exercises: phonebook
+- Part 2c: Getting data from server
+  - P2-example1
+  - data-for-countries
+- Part 2d: Altering data in server
+  - P2-example1
 
 
