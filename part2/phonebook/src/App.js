@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 
-import axios from 'axios'
+import contactHandler from './services/contact-handler'
 
 // Components
 import Search from './components/search/search.component'
@@ -16,16 +16,20 @@ function App() {
   const [ showAll, setShowAll ] = useState(true)
 
   // useEffect to run axios and fetch data from db.json (json server at localhost://3001)
-  useEffect(() => {
+  const startPersonList = () => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    contactHandler
+      .getContacts()
+      .then(initialPersons => {
+        // console.log('promise fulfilled')
+        setPersons(initialPersons)
       })
-  }, [])
-  console.log('render', persons.length, 'persons')
+      .catch(error => {
+        console.log(error)
+      })
+  }
+  useEffect(startPersonList, [])
+  // console.log('render', persons.length, 'persons')
 
   const personsToShow = showAll
   ? persons
@@ -40,21 +44,30 @@ function App() {
       setShowAll(true)
       setSearchName('')
     }
-    console.log(searchName)
+    // console.log(searchName)
   }
+
+  const resetSearchName = event => {
+    event.preventDefault()
+    setSearchName('')
+  }
+
   const handleNewName = (event) => {
     setNewName(event.target.value)
   }
+
   const handleNewNumber = (event) => {
     setNewNumber(event.target.value)
   }
 
+  // Adds a new person and number to the phonebook
+  // If there is a person with the same name, it asks the number to be updated
   const addPerson = (event) => {
     event.preventDefault()
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+      id: persons.id + 1
     }
     // Check if there is a person with the new name
     const existingPersons = persons.find(person => person.name === newName)
@@ -62,28 +75,62 @@ function App() {
       return alert(`Please, add a phone number!`)
     }
     if (existingPersons) {
-      alert(`${newName} is already added to the phonebook`)
-      setNewName('')
-      setNewNumber('')
+      const confirmUpdate = window.confirm(`${existingPersons.name} was already added to the phonebook, replace the old number with the new one ?`)
+      if (confirmUpdate) {
+        const numberUpdate = { ...existingPersons, number: newNumber }
+        contactHandler
+          .updateContact(existingPersons.id, numberUpdate)
+          .then(changedNumbers => {
+            setPersons(persons.map(person => person.id !== existingPersons.id ? person : changedNumbers))
+            setNewName('')
+            setNewNumber('')
+            setSearchName(`${existingPersons.name}`)
+            setShowAll(false)
+          })
+      }
     } else {
-      setPersons(persons.concat(newPerson))
-      setNewName('')
-      setNewNumber('')
+      contactHandler
+        .addContact(newPerson)
+        .then(newContact => {
+          setPersons(persons.concat(newContact))
+          setNewName('')
+          setNewNumber('')
+        })
+    }
+  }
+
+  const removePerson = (id) => {
+    const person = persons.find(n => n.id === id)
+    const confirmRemove = window.confirm(`Delete ${person.name} ?`)
+    if (confirmRemove) {
+      contactHandler
+        .removeContact(person.id)
+        .then(() => {
+          setPersons(persons.filter(contact => contact.id !== person.id))
+        })
     }
   }
 
   return (
     <div className="App">
       <h2>Phonebook</h2>
-      <Search searchName={searchName} handleSearchName={handleSearchName}/>
+      <Search
+        searchName={searchName}
+        handleSearchName={handleSearchName}
+        resetSearchName={resetSearchName}
+      />
       <AddNewPerson
         newName={newName}
-          newNumber={newNumber}
-            handleNewName={handleNewName}
-              handleNewNumber={handleNewNumber}
-                addPerson={addPerson}
+        newNumber={newNumber}
+        handleNewName={handleNewName}
+        handleNewNumber={handleNewNumber}
+        addPerson={addPerson}
       />
-      <Numbers personsToShow={personsToShow} />
+      {
+        persons.length <= 1
+        ? <div>The Database is not running. Start it with <code>npm run server</code></div>
+        : <Numbers personsToShow={personsToShow} removePerson={removePerson}/>
+      }
     </div>
   );
 }
