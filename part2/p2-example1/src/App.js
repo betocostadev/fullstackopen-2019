@@ -12,7 +12,7 @@ import Note from './components/note/note.component'
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
-  const [importantNote, setImportantNote] = useState(false);
+  const [importantNote, setImportantNote] = useState(false)
   const [showAll, setShowAll] = useState(true)
 
   const course = {
@@ -85,6 +85,13 @@ const App = () => {
       .then(changedNotes => {
         setNotes(notes.map(note => note.id !== id ? note : changedNotes))
         console.log(`importance of note: ${id}, changed`)
+      })
+      .catch(error => {
+        console.log(error)
+        alert(
+          `The note '${note.content}' was already deleted from the server.`
+        )
+        setNotes(notes.filter(n => n.id !== id))
       })
   }
 
