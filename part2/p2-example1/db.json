@@ -23,6 +23,24 @@
       "content": "Note from the json server",
       "date": "2019-10-16T19:46:54.029Z",
       "important": true
+    },
+    {
+      "id": 5,
+      "content": "React is nice",
+      "date": "2019-10-23T11:05:48.894Z",
+      "important": false
+    },
+    {
+      "id": 6,
+      "content": "New note",
+      "date": "2019-10-23T11:24:47.877Z",
+      "important": false
+    },
+    {
+      "id": 7,
+      "content": "Testing success message",
+      "date": "2019-10-23T11:55:10.758Z",
+      "important": false
     }
   ]
 }

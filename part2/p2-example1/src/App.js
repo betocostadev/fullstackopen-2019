@@ -7,6 +7,8 @@ import noteService from './services/notes'
 // Components
 import Header from './components/header/header.component'
 import Note from './components/note/note.component'
+import Notification from './components/notification/notification.component'
+import Footer from './components/footer/footer.component'
 
 
 const App = () => {
@@ -14,6 +16,8 @@ const App = () => {
   const [newNote, setNewNote] = useState('')
   const [importantNote, setImportantNote] = useState(false)
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   const course = {
     name: 'Full Stack Open', year: 2019
@@ -60,7 +64,8 @@ const App = () => {
     // console.log('button clicked', event.target)
     //   important: Math.random() > 0.5,
     const noteObject = {
-      id: notes.length + 1,
+      // id: notes.length + 1,
+      id: notes.id + 1,
       content: newNote,
       date: new Date().toISOString(),
       important: importantNote,
@@ -72,6 +77,10 @@ const App = () => {
         setNotes(notes.concat(newNotes))
         setNewNote('')
         setImportantNote(false)
+        setSuccessMessage('Note added to the server.')
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000);
       })
   }
 
@@ -88,9 +97,12 @@ const App = () => {
       })
       .catch(error => {
         console.log(error)
-        alert(
-          `The note '${note.content}' was already deleted from the server.`
+        setErrorMessage(
+          `Note '${note.content}' was already removed from server.`
         )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000);
         setNotes(notes.filter(n => n.id !== id))
       })
   }
@@ -110,6 +122,14 @@ const App = () => {
     <div>
       <Header course={course} />
       <h1>Notes</h1>
+      {
+        errorMessage
+        ? <Notification message={errorMessage} isError />
+        : successMessage
+        ? <Notification message={successMessage} isSuccess />
+        : null
+      }
+
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           Show {showAll ? 'important' : 'all' }
@@ -129,6 +149,7 @@ const App = () => {
           <input type='checkbox' checked={importantNote} onChange={handleImportance} />
         </label>
       </form>
+      <Footer/>
     </div>
   )
 }
