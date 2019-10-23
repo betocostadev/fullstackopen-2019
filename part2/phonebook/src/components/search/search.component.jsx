@@ -12,7 +12,7 @@ const Search = ({ searchName, handleSearchName, resetSearchName}) => {
           Name:
           <input className='search-box' type="text" value={searchName} onChange={handleSearchName} />
         </label>
-        <CustomButton onClick={resetSearchName} isRemove> × </CustomButton>
+        <CustomButton onClick={resetSearchName} isClose> × </CustomButton>
       </form>
     </div>
   )
