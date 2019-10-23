@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 
 const isAddStyles = css`
-  border-radius: 10%;
+  margin: 0.5rem 0 1rem 1rem;
+  border-radius: 5%;
+  padding: 0.4rem;
 
   &:hover {
     background: lightgreen;
@@ -23,6 +25,7 @@ const isRemoveStyles = css`
 
 const isCloseStyles = css`
   margin: 0 0 0.2rem 0.25rem;
+  padding: 0.1rem 0.5rem;
   border-radius: 50%;
   vertical-align: middle;
   font-weight: bold;

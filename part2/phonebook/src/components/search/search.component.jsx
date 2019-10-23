@@ -5,8 +5,8 @@ import CustomButton from '../custom-button/custom-button.component'
 
 const Search = ({ searchName, handleSearchName, resetSearchName}) => {
   return (
-    <div>
-    <h3>Seach by name</h3>
+    <div className='searchContainer'>
+      <h3>Seach by name</h3>
       <form>
         <label>
           Name:

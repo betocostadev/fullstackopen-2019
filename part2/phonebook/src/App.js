@@ -7,6 +7,7 @@ import contactHandler from './services/contact-handler'
 import Search from './components/search/search.component'
 import AddNewPerson from './components/add-new-person/add-new-person.component'
 import Numbers from './components/numbers/numbers.component'
+import DisplayMessageContainer from './components/display-message-container/display-message-container.component'
 
 function App() {
   const [ persons, setPersons ] = useState([])
@@ -14,6 +15,8 @@ function App() {
   const [ newNumber, setNewNumber] = useState('')
   const [ searchName, setSearchName] = useState('')
   const [ showAll, setShowAll ] = useState(true)
+  const [ displayMessage, setDisplayMessage ] = useState(null)
+  const [ messageStyle, setMessageStyle ] = useState(null)
 
   // useEffect to run axios and fetch data from db.json (json server at localhost://3001)
   const startPersonList = () => {
@@ -62,7 +65,7 @@ function App() {
 
   // Adds a new person and number to the phonebook
   // If there is a person with the same name, it asks the number to be updated
-  const addPerson = (event) => {
+  const addOrUpdate = (event) => {
     event.preventDefault()
     const newPerson = {
       name: newName,
@@ -86,6 +89,12 @@ function App() {
             setNewNumber('')
             setSearchName(`${existingPersons.name}`)
             setShowAll(false)
+            setDisplayMessage(`${existingPersons.name} number updated.`)
+            setMessageStyle('confirmMessage')
+            setTimeout(() => {
+              setDisplayMessage(null)
+              setMessageStyle(null)
+          }, 5000);
           })
       }
     } else {
@@ -95,6 +104,12 @@ function App() {
           setPersons(persons.concat(newContact))
           setNewName('')
           setNewNumber('')
+          setDisplayMessage(`${newPerson.name} added to the phonebook.`)
+          setMessageStyle('confirmMessage')
+          setTimeout(() => {
+            setDisplayMessage(null)
+            setMessageStyle(null)
+          }, 5000);
         })
     }
   }
@@ -107,13 +122,29 @@ function App() {
         .removeContact(person.id)
         .then(() => {
           setPersons(persons.filter(contact => contact.id !== person.id))
+          setDisplayMessage(`${person.name} removed from phonebook.`)
+          setMessageStyle('errorMessage')
+          setTimeout(() => {
+            setDisplayMessage(null)
+            setMessageStyle(null)
+          }, 5000);
+        })
+        .catch(error => {
+          console.log(error)
+          setDisplayMessage(`${person.name} has already been removed from the server`)
+          setMessageStyle('errorMessage')
+          setTimeout(() => {
+            setDisplayMessage(null)
+            setMessageStyle(null)
+          }, 5000);
+          setPersons(persons.filter(contact => contact.id !== person.id))
         })
     }
   }
 
   return (
     <div className="App">
-      <h2>Phonebook</h2>
+      <h2 className='title'>Phonebook</h2>
       <Search
         searchName={searchName}
         handleSearchName={handleSearchName}
@@ -124,8 +155,13 @@ function App() {
         newNumber={newNumber}
         handleNewName={handleNewName}
         handleNewNumber={handleNewNumber}
-        addPerson={addPerson}
+        addOrUpdate={addOrUpdate}
       />
+      {
+        displayMessage
+        ? <DisplayMessageContainer message={displayMessage} messageStyle={messageStyle}/>
+        : null
+      }
       {
         persons.length <= 1
         ? <div>The Database is not running. Start it with <code>npm run server</code></div>

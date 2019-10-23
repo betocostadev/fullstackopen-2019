@@ -2,7 +2,7 @@ import React from 'react'
 
 import CustomButton from '../custom-button/custom-button.component'
 
-const AddNewPerson = ({ newName, handleNewName, newNumber, handleNewNumber, addPerson }) => {
+const AddNewPerson = ({ newName, handleNewName, newNumber, handleNewNumber, addOrUpdate }) => {
   return (
     <div>
       <h3>Add new person</h3>
@@ -12,11 +12,11 @@ const AddNewPerson = ({ newName, handleNewName, newNumber, handleNewNumber, addP
           <input type="text" value={newName} onChange={handleNewName} />
         </label>
         <label>
-          Telephone:
+          Number:
           <input type="tel" value={newNumber} onChange={handleNewNumber} />
         </label>
         <div>
-          <CustomButton type="submit" onClick={addPerson} isAdd>add</CustomButton>
+          <CustomButton type="submit" onClick={addOrUpdate} isAdd>add</CustomButton>
         </div>
       </form>
     </div>

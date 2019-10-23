@@ -1,7 +1,50 @@
 .App {
   min-height: 90vh;
+  width: 70%;
+  margin: 0 15%;
+  background: rgb(253, 255, 230);
+  border: 1px dashed darkslategrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  padding: 0.5rem;
+  color: darkslateblue;
+}
+
+.App div:nth-child(3) {
+  align-self: flex-start;
+}
+
+.App div:nth-child(3) h3,
+.App div:nth-child(4) h2,
+.App div:nth-child(5) h2 {
+  color: darkslateblue;
+}
+
+.App div:nth-child(4),
+.App div:nth-child(5) {
+  align-self: flex-start;
+  width: 95%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0.5rem 0.5rem 0.5rem;
 }
 
 label {
   margin: 0.5rem;
+}
+input {
+  margin: 0.5rem;
+}
+
+@media only screen and (max-width: 572px) {
+  .App {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+  }
 }
