@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 let notes = [
   {
@@ -24,6 +25,7 @@ let notes = [
 
 // Adds Express own body-parser to parse json
 app.use(express.json())
+app.use(cors())
 
 // Serve the app
 app.get('/', (req, res) => {
